@@ -5,6 +5,7 @@ import 'package:flutter000/model/to_do.dart';
 
 
 import 'package:flutter000/page/form.dart';
+import 'package:flutter000/page/fetchToDo.dart';
 
 import 'package:flutter000/main.dart';
 
@@ -20,30 +21,30 @@ class ToDoPage extends StatefulWidget {
 }
 
 class _ToDoPageState extends State<ToDoPage> {
-  Future<List<ToDo>> fetchToDo() async {
-    var url = Uri.parse(
-        'https://jsonplaceholder.typicode.com/todos?_start=0&_limit=10');
-    var response = await http.get(
-      url,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-      },
-    );
+  // Future<List<ToDo>> fetchToDo() async {
+  //   var url = Uri.parse(
+  //       'https://jsonplaceholder.typicode.com/todos?_start=0&_limit=10');
+  //   var response = await http.get(
+  //     url,
+  //     headers: {
+  //       "Access-Control-Allow-Origin": "*",
+  //       "Content-Type": "application/json",
+  //     },
+  //   );
 
-    // melakukan decode response menjadi bentuk json
-    var data = jsonDecode(utf8.decode(response.bodyBytes));
+  //   // melakukan decode response menjadi bentuk json
+  //   var data = jsonDecode(utf8.decode(response.bodyBytes));
 
-    // melakukan konversi data json menjadi object ToDo
-    List<ToDo> listToDo = [];
-    for (var d in data) {
-      if (d != null) {
-        listToDo.add(ToDo.fromJson(d));
-      }
-    }
+  //   // melakukan konversi data json menjadi object ToDo
+  //   List<ToDo> listToDo = [];
+  //   for (var d in data) {
+  //     if (d != null) {
+  //       listToDo.add(ToDo.fromJson(d));
+  //     }
+  //   }
 
-    return listToDo;
-  }
+  //   return listToDo;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +90,8 @@ class _ToDoPageState extends State<ToDoPage> {
           ),
         ),
         body: FutureBuilder(
-            future: fetchToDo(),
+          future: fetcherToDo().fetchToDo(),
+            // future: fetchToDo(),
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.data == null) {
                 return const Center(child: CircularProgressIndicator());
